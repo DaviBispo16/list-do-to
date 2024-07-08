@@ -1,0 +1,7 @@
+CREATE TABLE tasks(
+  	id SERIAL PRIMARY KEY,
+  	name varchar(100) NOT NULL,
+  	initialDate varchar(30),
+  	finalDate varchar(30),
+	description text
+);

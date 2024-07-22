@@ -1,4 +1,4 @@
-package com.exemplo.list_do_to.dto;
+package com.exemplo.list_do_to.model.task;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;

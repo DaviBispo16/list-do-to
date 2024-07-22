@@ -1,7 +1,7 @@
 package com.exemplo.list_do_to.controller;
 
-import com.exemplo.list_do_to.dto.TaskDTO;
-import com.exemplo.list_do_to.model.Task;
+import com.exemplo.list_do_to.model.task.TaskDTO;
+import com.exemplo.list_do_to.model.task.Task;
 import com.exemplo.list_do_to.repository.TasksRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

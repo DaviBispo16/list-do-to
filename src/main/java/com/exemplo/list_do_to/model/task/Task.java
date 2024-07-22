@@ -1,6 +1,5 @@
-package com.exemplo.list_do_to.model;
+package com.exemplo.list_do_to.model.task;
 
-import com.exemplo.list_do_to.dto.TaskDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

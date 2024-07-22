@@ -18,7 +18,7 @@ import java.util.Collection;
 
 public class User implements UserDetails{
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Integer id;
 
     private String username;
 
@@ -26,6 +26,11 @@ public class User implements UserDetails{
 
     private String password;
 
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

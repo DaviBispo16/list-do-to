@@ -17,7 +17,7 @@ import java.util.Collection;
 @EqualsAndHashCode(of = "id")
 
 public class User implements UserDetails{
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     private String username;

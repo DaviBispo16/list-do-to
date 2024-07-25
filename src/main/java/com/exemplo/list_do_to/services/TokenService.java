@@ -20,12 +20,12 @@ public class TokenService {
     @Value("${api.security.token.security}")
     private String secret;
 
-    public String generateToken(User user) {
+    public String generateToken(String username) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("list-do-to")
-                    .withSubject(user.getUsername())
+                    .withSubject(username)
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;

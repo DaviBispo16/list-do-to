@@ -49,13 +49,16 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody @Valid LoginDTO data) {
+
+        if (!this.userRepository.existsByUsername(data.username())) {
+            throw new ExistingUsername();
+        }
+
         var userNamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
-        var auth = this.authenticationManager.authenticate(userNamePassword);
-        System.out.println(auth);
 
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+        var token = tokenService.generateToken((String) userNamePassword.getPrincipal());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ResponseDTO(token));
     }
 
 }

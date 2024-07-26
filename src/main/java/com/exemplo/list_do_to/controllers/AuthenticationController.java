@@ -1,6 +1,7 @@
 package com.exemplo.list_do_to.controllers;
 
 import com.exemplo.list_do_to.exceptions.ExistingUsername;
+import com.exemplo.list_do_to.exceptions.WrongUsername;
 import com.exemplo.list_do_to.model.user.LoginDTO;
 import com.exemplo.list_do_to.model.user.RegisterDTO;
 import com.exemplo.list_do_to.model.user.ResponseDTO;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -50,8 +54,16 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody @Valid LoginDTO data) {
 
+        User user = userRepository.findOneByUsername(data.username());
+
         if (!this.userRepository.existsByUsername(data.username())) {
-            throw new ExistingUsername();
+            throw new WrongUsername();
+        }
+
+        boolean correctPassword = new BCryptPasswordEncoder().matches(data.password(), user.getPassword());
+
+        if (!correctPassword) {
+            throw new WrongUsername();
         }
 
         var userNamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());

@@ -1,7 +1,10 @@
 CREATE TABLE tasks(
   	id SERIAL PRIMARY KEY,
   	name varchar(100) NOT NULL,
-  	initialDate varchar(30),
-  	finalDate varchar(30),
-	description text
+  	initial_date varchar(30),
+  	final_date varchar(30),
+	description text,
+	user_id int NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES users (id)
 );

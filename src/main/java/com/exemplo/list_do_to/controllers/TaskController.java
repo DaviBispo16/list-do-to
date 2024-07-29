@@ -2,13 +2,17 @@ package com.exemplo.list_do_to.controllers;
 
 import com.exemplo.list_do_to.model.task.TaskDTO;
 import com.exemplo.list_do_to.model.task.Task;
+import com.exemplo.list_do_to.model.user.User;
 import com.exemplo.list_do_to.repositories.TasksRepository;
+import com.exemplo.list_do_to.repositories.UserRepository;
+import com.exemplo.list_do_to.services.TokenService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +20,12 @@ import java.util.Optional;
 public class TaskController {
     @Autowired
     private TasksRepository tasksRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TokenService tokenService;
 
     @GetMapping
     public ResponseEntity getTasks() {
@@ -25,8 +35,13 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity addTask(@RequestBody @Valid TaskDTO taskDTO) {
-        Task newTask = new Task(taskDTO);
+        var login = tokenService.validateToken(taskDTO.getToken());
+
+        User user_id = userRepository.findOneByUsername(login);
+
+        Task newTask = new Task(taskDTO, user_id.getId());
         tasksRepository.save(newTask);
+
         return ResponseEntity.status(201).build();
     }
 
@@ -38,8 +53,8 @@ public class TaskController {
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
             task.setName(taskDTO.getName());
-            task.setInitialDate(taskDTO.getInitialDate());
-            task.setFinalDate(taskDTO.getFinalDate());
+            task.setInitial_date(taskDTO.getInitialDate());
+            task.setFinal_date(taskDTO.getFinalDate());
             task.setDescription(taskDTO.getDescription());
             task.setStatus(taskDTO.getStatus());
             return ResponseEntity.ok(task);
@@ -61,4 +76,12 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
+    //TODO: GET ONE TASK
+//    @GetMapping("/{id}")
+//    public ResponseEntity getOneTask(@PathVariable Integer id) {
+//        Optional<Task> optionalTask = tasksRepository.findById(Long.valueOf(id));
+//
+//        return ResponseEntity.ok(optionalTask);
+//
+//    }
 }

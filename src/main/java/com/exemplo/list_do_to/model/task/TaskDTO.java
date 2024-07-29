@@ -11,13 +11,16 @@ public class TaskDTO {
         @NotBlank
         private String name;
 
-        private String initialDate;
+        private String initial_date;
 
-        private String finalDate;
+        private String final_date;
 
         private String description;
 
         private String status;
+
+        private String token;
+
 
         public Long getId() {
                 return id;
@@ -32,19 +35,19 @@ public class TaskDTO {
         }
 
         public String getInitialDate() {
-                return initialDate;
+                return initial_date;
         }
 
         public void setInitialDate(String initialDate) {
-                this.initialDate = initialDate;
+                this.initial_date = initial_date;
         }
 
         public String getFinalDate() {
-                return finalDate;
+                return final_date;
         }
 
         public void setFinalDate(String finalDate) {
-                this.finalDate = finalDate;
+                this.final_date = final_date;
         }
 
         public String getDescription() {
@@ -61,5 +64,17 @@ public class TaskDTO {
 
         public void setStatus(String status) {
                 this.status = status;
+        }
+
+        public String getToken() {
+                return token;
+        }
+
+        public String getInitial_date() {
+                return initial_date;
+        }
+
+        public String getFinal_date() {
+                return final_date;
         }
 }
